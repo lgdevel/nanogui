@@ -48,3 +48,6 @@ resources/nanogui-entypo
 
 compile_commands.json
 .clangd
+
+#QtCreator
+*.txt.user
