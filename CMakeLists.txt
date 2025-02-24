@@ -422,6 +422,7 @@ add_library(nanogui ${NANOGUI_LIBRARY_TYPE}
   include/nanogui/texture.h src/texture.cpp
   include/nanogui/shader.h src/shader.cpp
   include/nanogui/imageview.h src/imageview.cpp
+  include/nanogui/imageview_areaselect.h src/imageview_areaselect.cpp
   include/nanogui/traits.h src/traits.cpp
   include/nanogui/renderpass.h
   include/nanogui/formhelper.h

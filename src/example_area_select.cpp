@@ -45,7 +45,7 @@ Application::Application()
         Texture::InterpolationMode::Nearest );
 
     tex->upload(texture_data.get());
-    ImageView *image_view = new ImageView(image_window);
+    ImageViewAreaSelect *image_view = new ImageViewAreaSelect(image_window);
     image_view->set_image( tex );
     image_view->set_size( Vector2i(1024, 768) );
     image_view->center();
