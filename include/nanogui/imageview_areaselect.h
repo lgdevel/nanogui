@@ -12,11 +12,12 @@ public:
     // Widget implementation
     virtual bool mouse_drag_event(const Vector2i &p, const Vector2i &rel, int button, int modifiers) override;
     virtual bool mouse_button_event(const Vector2i &p, int button, bool down, int modifiers) override;
-    virtual bool mouse_motion_event(const Vector2i &p, const Vector2i &rel, int button, int modifiers) override;
+    virtual void draw(NVGcontext *ctx) override;
 
 private:
     Vector2i m_first_point;
     Vector2i m_last_point;
+    Vector2i m_rect_size;
     bool m_select_in_progress{false};
 };
 

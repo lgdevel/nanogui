@@ -11,6 +11,7 @@
 
 NAMESPACE_BEGIN(nanogui)
 
+
 bool ImageViewAreaSelect::mouse_drag_event(const Vector2i & p, const Vector2i &rel,
                                  int button, int modifiers) {
     if (!m_enabled || !m_image)
@@ -18,11 +19,13 @@ bool ImageViewAreaSelect::mouse_drag_event(const Vector2i & p, const Vector2i &r
 
     if( modifiers != GLFW_MOD_CONTROL ){
         m_offset += rel * screen()->pixel_ratio();
-    } else {
-        // std::cout << "mouse_drag_event:" << std::endl;
-        // std::cout << "\tp: " << p << "; " << "rel: " << rel << std::endl;
-        // std::cout << "\tbutton: " << button << "; " << "modifiers: " << modifiers << std::endl;
+    } else if( m_select_in_progress ) {
+        m_rect_size = p - m_first_point;
+        std::cout << "mouse_drag_event:" << std::endl;
+        std::cout << "\tp: " << p << "; " << "rel: " << rel << std::endl;
+        std::cout << "\tbutton: " << button << "; " << "modifiers: " << modifiers << std::endl;
     }
+
     return true;
 }
 
@@ -47,13 +50,19 @@ bool ImageViewAreaSelect::mouse_button_event(const Vector2i &p, int button, bool
     return true;
 }
 
-bool ImageViewAreaSelect::mouse_motion_event(const Vector2i &p, const Vector2i &rel, int button, int modifiers)
+void ImageViewAreaSelect::draw(NVGcontext *ctx)
 {
-    if( modifiers == GLFW_MOD_CONTROL ){
+    ImageView::draw(ctx);
+    if( m_select_in_progress ){
+        std::cout << "draw..." << std::endl;
 
+        nvgBeginPath(ctx);
+        nvgStrokeWidth(ctx, 1.f);
+        nvgStrokeColor(ctx, m_image_border_color);
+        nvgRect(ctx, m_first_point.x(), m_first_point.y(),
+                     m_rect_size.x(), m_rect_size.y());
+        nvgStroke(ctx);
     }
-
-    return true;
 }
 
 NAMESPACE_END(nanogui)
