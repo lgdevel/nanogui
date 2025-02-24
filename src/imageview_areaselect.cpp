@@ -21,9 +21,9 @@ bool ImageViewAreaSelect::mouse_drag_event(const Vector2i & p, const Vector2i &r
         m_offset += rel * screen()->pixel_ratio();
     } else if( m_select_in_progress ) {
         m_rect_size = p - m_first_point;
-        std::cout << "mouse_drag_event:" << std::endl;
-        std::cout << "\tp: " << p << "; " << "rel: " << rel << std::endl;
-        std::cout << "\tbutton: " << button << "; " << "modifiers: " << modifiers << std::endl;
+        // std::cout << "mouse_drag_event:" << std::endl;
+        // std::cout << "\tp: " << p << "; " << "rel: " << rel << std::endl;
+        // std::cout << "\tbutton: " << button << "; " << "modifiers: " << modifiers << std::endl;
     }
 
     return true;
@@ -54,7 +54,7 @@ void ImageViewAreaSelect::draw(NVGcontext *ctx)
 {
     ImageView::draw(ctx);
     if( m_select_in_progress ){
-        std::cout << "draw..." << std::endl;
+        //std::cout << "draw..." << std::endl;
 
         nvgBeginPath(ctx);
         nvgStrokeWidth(ctx, 2.f);
