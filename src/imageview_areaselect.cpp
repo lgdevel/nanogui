@@ -57,10 +57,17 @@ void ImageViewAreaSelect::draw(NVGcontext *ctx)
         std::cout << "draw..." << std::endl;
 
         nvgBeginPath(ctx);
-        nvgStrokeWidth(ctx, 1.f);
+        nvgStrokeWidth(ctx, 2.f);
         nvgStrokeColor(ctx, m_image_border_color);
         nvgRect(ctx, m_first_point.x(), m_first_point.y(),
                      m_rect_size.x(), m_rect_size.y());
+        nvgStroke(ctx);
+    } else if( m_last_point.x() > 0 ){
+        nvgBeginPath(ctx);
+        nvgStrokeWidth(ctx, 2.f);
+        nvgStrokeColor(ctx, m_image_border_color);
+        nvgRect(ctx, m_first_point.x(), m_first_point.y(),
+                m_last_point.x() - m_first_point.x() , m_last_point.y() - m_first_point.y());
         nvgStroke(ctx);
     }
 }

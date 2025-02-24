@@ -15,9 +15,9 @@ public:
     virtual void draw(NVGcontext *ctx) override;
 
 private:
-    Vector2i m_first_point;
-    Vector2i m_last_point;
-    Vector2i m_rect_size;
+    Vector2i m_first_point{0,0};
+    Vector2i m_last_point{0,0};
+    Vector2i m_rect_size{0,0};
     bool m_select_in_progress{false};
 };
 
