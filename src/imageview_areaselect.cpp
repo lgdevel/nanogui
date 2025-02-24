@@ -58,14 +58,14 @@ void ImageViewAreaSelect::draw(NVGcontext *ctx)
 
         nvgBeginPath(ctx);
         nvgStrokeWidth(ctx, 2.f);
-        nvgStrokeColor(ctx, m_image_border_color);
+        nvgStrokeColor(ctx, Color(255.f, 0.f, 0.f, 0.3f) );
         nvgRect(ctx, m_first_point.x(), m_first_point.y(),
                      m_rect_size.x(), m_rect_size.y());
         nvgStroke(ctx);
     } else if( m_last_point.x() > 0 ){
         nvgBeginPath(ctx);
         nvgStrokeWidth(ctx, 2.f);
-        nvgStrokeColor(ctx, m_image_border_color);
+        nvgStrokeColor(ctx, Color(255.f, 0.f, 0.f, 0.3f) );
         nvgRect(ctx, m_first_point.x(), m_first_point.y(),
                 m_last_point.x() - m_first_point.x() , m_last_point.y() - m_first_point.y());
         nvgStroke(ctx);
