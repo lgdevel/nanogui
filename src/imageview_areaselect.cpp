@@ -17,9 +17,22 @@ bool ImageViewAreaSelect::mouse_drag_event(const Vector2i & p, const Vector2i &r
     if (!m_enabled || !m_image)
         return false;
 
-    if( modifiers != GLFW_MOD_CONTROL ){
+    if( modifiers != GLFW_MOD_CONTROL ){ // moving image
         m_offset += rel * screen()->pixel_ratio();
-    } else if( m_select_in_progress ) {
+
+        if( m_offset.x() > 1 ) m_offset.x() = 1;
+        if( m_offset.y() > 1 ) m_offset.y() = 1;
+        auto hor_limit = -m_image->size().x() + size().x() - 3;
+        if( m_offset.x() < hor_limit ) m_offset.x() = hor_limit;
+        auto ver_limit = -m_image->size().y() + size().y() - 3;
+        if( m_offset.y() < ver_limit ) m_offset.y() = ver_limit;
+
+        // std::cout << "m_image->size(): " << m_image->size() << std::endl;
+        // std::cout << "size(): " << size() << std::endl;
+        // std::cout << "m_offset: " << m_offset << std::endl;
+
+        reset_selection();
+    } else if( m_select_in_progress ) { // draw selection on image
         m_rect_size = p - m_first_point;
         // std::cout << "mouse_drag_event:" << std::endl;
         // std::cout << "\tp: " << p << "; " << "rel: " << rel << std::endl;
@@ -45,6 +58,8 @@ bool ImageViewAreaSelect::mouse_button_event(const Vector2i &p, int button, bool
         // std::cout << "\tp: " << p << "; " << std::endl;
         // std::cout << "\tbutton: " << button << " " << (down ? "DOWN" : "UP") << std::endl;
         // std::cout << "\tmodifiers: " << modifiers << std::endl;
+    } else if( button == GLFW_MOUSE_BUTTON_2 ){
+        reset_selection();
     }
 
     return true;
@@ -70,6 +85,14 @@ void ImageViewAreaSelect::draw(NVGcontext *ctx)
                 m_last_point.x() - m_first_point.x() , m_last_point.y() - m_first_point.y());
         nvgStroke(ctx);
     }
+}
+
+void ImageViewAreaSelect::reset_selection()
+{
+    m_first_point = {0,0};
+    m_last_point = {0,0};
+    m_rect_size = {0,0};
+    m_select_in_progress = false;
 }
 
 NAMESPACE_END(nanogui)

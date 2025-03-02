@@ -19,6 +19,8 @@ private:
     Vector2i m_last_point{0,0};
     Vector2i m_rect_size{0,0};
     bool m_select_in_progress{false};
+
+    void reset_selection();
 };
 
 NAMESPACE_END(nanogui)
