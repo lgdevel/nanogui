@@ -68,19 +68,19 @@ bool ImageViewAreaSelect::mouse_button_event(const Vector2i &p, int button, bool
 void ImageViewAreaSelect::draw(NVGcontext *ctx)
 {
     ImageView::draw(ctx);
+    // auto rectColor = Color(255.f, 0.f, 0.f, 1.0f);
     if( m_select_in_progress ){
         //std::cout << "draw..." << std::endl;
-
         nvgBeginPath(ctx);
         nvgStrokeWidth(ctx, 1.0f);
-        nvgStrokeColor(ctx, Color(255.f, 0.f, 0.f, 1.0f) );
+        nvgStrokeColor(ctx, m_rectangle_color );
         nvgRect(ctx, m_first_point.x(), m_first_point.y(),
                      m_rect_size.x(), m_rect_size.y());
         nvgStroke(ctx);
     } else if( m_last_point.x() > 0 ){
         nvgBeginPath(ctx);
         nvgStrokeWidth(ctx, 1.0f);
-        nvgStrokeColor(ctx, Color(255.f, 0.f, 0.f, 1.0f) );
+        nvgStrokeColor(ctx, m_rectangle_color );
         nvgRect(ctx, m_first_point.x(), m_first_point.y(),
                 m_last_point.x() - m_first_point.x() , m_last_point.y() - m_first_point.y());
         nvgStroke(ctx);
@@ -93,6 +93,11 @@ void ImageViewAreaSelect::reset_selection()
     m_last_point = {0,0};
     m_rect_size = {0,0};
     m_select_in_progress = false;
+}
+
+void ImageViewAreaSelect::set_color( Color c )
+{
+    m_rectangle_color = c;
 }
 
 NAMESPACE_END(nanogui)

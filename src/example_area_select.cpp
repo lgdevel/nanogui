@@ -46,6 +46,7 @@ Application::Application()
 
     tex->upload(texture_data.get());
     ImageViewAreaSelect *image_view = new ImageViewAreaSelect(image_window);
+    image_view->set_color( Color{ 255.f, 0.f, 0.f, 1.0f } );
     image_view->set_image( tex );
     image_view->set_size( Vector2i(1024, 768) );
     image_view->center();
