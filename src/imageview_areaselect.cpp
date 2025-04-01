@@ -53,7 +53,8 @@ bool ImageViewAreaSelect::mouse_button_event(const Vector2i &p, int button, bool
             m_select_in_progress = false;
             m_last_point = p;
             std::cout << "Selected area first: " << m_first_point << "; last: " << m_last_point << std::endl;
-            std::cout << "Point top-left: " << get_top_left() << "; bottom-right: " << get_bottom_right() << std::endl;
+            std::cout << "Point top-left: " << win_top_left() << "; bottom-right: " << win_bottom_right() << std::endl;
+            std::cout << "scale(): " << scale() << std::endl;
         }
 
         // std::cout << "mouse_button_event:" << std::endl;
@@ -102,13 +103,13 @@ void ImageViewAreaSelect::set_color( Color c )
     m_rectangle_color = c;
 }
 
-Vector2i ImageViewAreaSelect::get_top_left() const
+Vector2i ImageViewAreaSelect::win_top_left() const
 {
     return Vector2i( std::min(m_first_point.x(), m_last_point.x() ),
                      std::min(m_first_point.y(), m_last_point.y() ) );
 }
 
-Vector2i ImageViewAreaSelect::get_bottom_right() const
+Vector2i ImageViewAreaSelect::win_bottom_right() const
 {
     return Vector2i( std::max(m_first_point.x(), m_last_point.x() ),
                      std::max(m_first_point.y(), m_last_point.y() ) );

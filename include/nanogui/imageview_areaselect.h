@@ -14,8 +14,8 @@ public:
     virtual bool mouse_button_event(const Vector2i &p, int button, bool down, int modifiers) override;
     virtual void draw(NVGcontext *ctx) override;
     void set_color( Color c );
-    Vector2i get_top_left() const;
-    Vector2i get_bottom_right() const;
+    Vector2i win_top_left() const;
+    Vector2i win_bottom_right() const;
 
 private:
     Vector2i m_first_point{0,0};
