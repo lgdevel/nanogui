@@ -26,7 +26,6 @@ private:
     bool m_select_in_progress{false};
     Color m_rectangle_color{ 255.f, 0.f, 0.f, 1.0f };
     Vector2i const m_layout_offset{5,35};
-    //Vector2i const m_layout_offset{4,34};
 
     void reset_selection();
     Vector2i limit_selection_point( Vector2i const & p ) const;
