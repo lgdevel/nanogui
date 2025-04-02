@@ -143,12 +143,12 @@ Vector2i ImageViewAreaSelect::win_bottom_right() const
 
 Vector2i ImageViewAreaSelect::img_top_left() const
 {
-    return win_top_left() - Vector2i(m_offset);
+    return win_top_left() - Vector2i(m_offset) - layout_offset() + Vector2i{1,1};
 }
 
 Vector2i ImageViewAreaSelect::img_bottom_right() const
 {
-    return win_bottom_right() - Vector2i(m_offset);
+    return win_bottom_right() - Vector2i(m_offset) - layout_offset() + Vector2i{0,1};
 }
 
 NAMESPACE_END(nanogui)
