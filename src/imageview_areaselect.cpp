@@ -12,6 +12,29 @@
 
 NAMESPACE_BEGIN(nanogui)
 
+Vector2i ImageViewAreaSelect::layout_offset() const
+{
+    return m_layout_offset;
+}
+
+Vector2i ImageViewAreaSelect::limit_selection_point( Vector2i const & p ) const
+{
+    //Vector2i const layout_offset{5,35};
+    Vector2i valid_point = p;
+    if( valid_point.x() - Vector2i(m_offset).x() > m_image->size().x() )
+        valid_point.x() = m_image->size().x() + Vector2i(m_offset).x();
+
+    if( valid_point.y() - Vector2i(m_offset).y() > m_image->size().y() )
+        valid_point.y() = m_image->size().y() + Vector2i(m_offset).y();
+
+    if( valid_point.x() - Vector2i(m_offset).x() < layout_offset().x() )
+        valid_point.x() = layout_offset().x();
+
+    if( valid_point.y() - Vector2i(m_offset).y() < layout_offset().y() )
+        valid_point.y() = layout_offset().y();
+
+    return valid_point;
+}
 
 bool ImageViewAreaSelect::mouse_drag_event(const Vector2i & p, const Vector2i &rel,
                                  int button, int modifiers) {
@@ -34,7 +57,7 @@ bool ImageViewAreaSelect::mouse_drag_event(const Vector2i & p, const Vector2i &r
 
         reset_selection();
     } else if( m_select_in_progress ) { // draw selection on image
-        m_rect_size = p - m_first_point;
+        m_rect_size = limit_selection_point(p) - m_first_point;
         // std::cout << "mouse_drag_event:" << std::endl;
         // std::cout << "\tp: " << p << "; " << "rel: " << rel << std::endl;
         // std::cout << "\tbutton: " << button << "; " << "modifiers: " << modifiers << std::endl;
@@ -48,13 +71,17 @@ bool ImageViewAreaSelect::mouse_button_event(const Vector2i &p, int button, bool
     if( modifiers == GLFW_MOD_CONTROL && button == GLFW_MOUSE_BUTTON_1 ){
         if( down ){
             m_select_in_progress = true;
-            m_first_point = p;
+            m_first_point = limit_selection_point(p);
         } else {
             m_select_in_progress = false;
-            m_last_point = p;
+            m_last_point = limit_selection_point(p);
+            std::cout << "-------------------------------------------" << std::endl;
             std::cout << "Selected area first: " << m_first_point << "; last: " << m_last_point << std::endl;
-            std::cout << "Point top-left: " << win_top_left() << "; bottom-right: " << win_bottom_right() << std::endl;
+            std::cout << "Window top-left: " << win_top_left() << "; bottom-right: " << win_bottom_right() << std::endl;
             std::cout << "scale(): " << scale() << std::endl;
+            std::cout << "m_offset: " << m_offset << std::endl;
+            std::cout << "Image top-left: " << img_top_left() << "; bottom-right: " << img_bottom_right() << std::endl;
+            std::cout << "m_image->size(): " << m_image->size() << std::endl;
         }
 
         // std::cout << "mouse_button_event:" << std::endl;
@@ -113,6 +140,16 @@ Vector2i ImageViewAreaSelect::win_bottom_right() const
 {
     return Vector2i( std::max(m_first_point.x(), m_last_point.x() ),
                      std::max(m_first_point.y(), m_last_point.y() ) );
+}
+
+Vector2i ImageViewAreaSelect::img_top_left() const
+{
+    return win_top_left() - Vector2i(m_offset);
+}
+
+Vector2i ImageViewAreaSelect::img_bottom_right() const
+{
+    return win_bottom_right() - Vector2i(m_offset);
 }
 
 NAMESPACE_END(nanogui)
