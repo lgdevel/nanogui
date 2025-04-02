@@ -19,7 +19,6 @@ Vector2i ImageViewAreaSelect::layout_offset() const
 
 Vector2i ImageViewAreaSelect::limit_selection_point( Vector2i const & p ) const
 {
-    //Vector2i const layout_offset{5,35};
     Vector2i valid_point = p;
     if( valid_point.x() - Vector2i(m_offset).x() > m_image->size().x() )
         valid_point.x() = m_image->size().x() + Vector2i(m_offset).x();
